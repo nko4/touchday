@@ -11,7 +11,7 @@ module.exports = function (socket) {
   socket.on('user.kiss', function (data, cb) {
     if (data.what === 'my ass') {
       Token.getUser(data.token).then(function (user) {
-        me = user.getJSON();
+        me = user.toJSON();
         cb(200, 'iamblue >///<');
       }, function (err) {
         cb(500);
@@ -43,7 +43,7 @@ module.exports = function (socket) {
       status = undefined;
     }
     User.getTasks(status).then(function (tasks) {
-      cb(200, tasks.getJSON());
+      cb(200, tasks.toJSON());
     }, function (err) {
       cb(500);
     });
