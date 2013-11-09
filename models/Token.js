@@ -26,4 +26,25 @@ Token.statics.generate = function (user) {
   return deferred.promise;
 };
 
+Token.statics.getUser = function (tokenId) {
+  var deferred = Q.defer();
+  this.findOne({
+    _id: tokenId
+  }, function (err, token) {
+    if (err) {
+      return deferred.reject(err);
+    }
+    var User = mongoose.model('User');
+    User.findOne({
+      _id: token.user
+    }, function (err, user) {
+      if (err) {
+        return deferred.reject(err);
+      }
+      deferred.resolve(user);
+    });
+  });
+  return deferred.promise;
+};
+
 module.exports = Token;

@@ -48,4 +48,7 @@ User.statics.createAndGet = function (data) {
   return deferred.promise;
 };
 
+User.methods.getTasks = function () {
+};
+
 module.exports = User;

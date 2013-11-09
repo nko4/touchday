@@ -1,7 +1,0 @@
-{
-  "host": "touchday.2013.nodeknockout.com",
-  "port": 80,
-  "github.ClientID": "",
-  "github.ClientSecret": "",
-  "github.redirectUri": "/user/login-callback"
-}
