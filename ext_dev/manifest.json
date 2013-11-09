@@ -13,8 +13,9 @@
     "https://ajax.googleapis.com/",
     "http://touchday.2013.nodeknockout.com/"
   ],
-  "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html"
-  }
+  "content_scripts": [{
+    "matches": ["http://*/*", "https://*/*"],
+    "css": ["mygooglestyles.css"],
+    "js": ["jquery.js", "mygooglescript.js"]
+  }]
 }
