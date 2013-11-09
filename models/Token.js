@@ -34,6 +34,9 @@ Token.statics.getUser = function (tokenId) {
     if (err) {
       return deferred.reject(err);
     }
+    if (!token) {
+      return deferred.reject(new Error('getUser failed'));
+    }
     var User = mongoose.model('User');
     User.findOne({
       _id: token.user
