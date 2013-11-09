@@ -1,6 +1,6 @@
 'use strict';
 
-var app = require('../lib');
+var app = require('../lib/app');
 
 module.exports = function (socket) {
   var models = app.models;
