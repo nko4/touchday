@@ -1,14 +1,9 @@
 module.exports = (grunt) ->
   require("load-grunt-tasks") grunt
 
-  appConfig =
-    dev: "frontend"
-    dist: "public"
-
   # Project configuration.
   grunt.initConfig
     pkg: grunt.file.readJSON("package.json")
-    app: appConfig
     # Put JavaScript
     coffee:
       options:
@@ -48,8 +43,10 @@ module.exports = (grunt) ->
           dest: "<%= app.dist %>"
           ext: ".css"
         ]
+    # Put HTML, Script, Style
     concurrent:
       dist: ["jade","coffee","stylus"]
+    # Clean
     clean: ["<%= app.dist %>"]
     copy: 
       main: 
@@ -81,5 +78,11 @@ module.exports = (grunt) ->
       #   options:
       #     middleware: (connect) ->
       #       [mountFolder(connect, "<%= app.dist %>")]
+  # grunt.config 'app',
+  #   dev: 'ext_dev'
+  #   dist: 'ext'
+  grunt.config 'app',
+    dev: 'frontend'
+    dist: 'public'
 
-  grunt.registerTask "default", ["clean","copy","concurrent:dist", "connect",  "watch"]
+  grunt.registerTask "default", ["clean","copy","concurrent", "connect",  "watch"]
