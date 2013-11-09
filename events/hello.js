@@ -5,13 +5,14 @@ var app = require('../lib');
 module.exports = function (socket) {
   var models = app.models;
   var Token = models.Token;
+  var User = models.User;
   var me;
 
   socket.on('user.kiss', function (data, cb) {
     if (data.what === 'my ass') {
       Token.getUser(data.token).then(function (user) {
-        me = user;
-        cb(200, '>///<');
+        me = user.getJSON();
+        cb(200, 'iamblue >///<');
       }, function (err) {
         cb(500);
       });
@@ -24,5 +25,24 @@ module.exports = function (socket) {
 
   socket.on('user.alreadyLogin', function (cb) {
     cb(200, !!me);
+  });
+
+  socket.on('user.tasks', function (status, cb) {
+    if (typeof status === 'function') {
+      cb = status;
+      status = undefined;
+    }
+    User.getTasks(status).then(function (tasks) {
+      cb(200, tasks.getJSON());
+    }, function (err) {
+      cb(500);
+    });
+  });
+
+  socket.on('user.tasks.check', function (cb) {
+  });
+
+  socket.on('user.tasks.new', function () {
+    
   });
 };

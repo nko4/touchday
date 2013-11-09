@@ -48,7 +48,37 @@ User.statics.createAndGet = function (data) {
   return deferred.promise;
 };
 
-User.methods.getTasks = function () {
+User.methods.getTasks = function (status) {
+  var deferred = Q.defer();
+  var Task = mongoose.model('Task');
+  var query = {};
+  query.user = this._id;
+  if (status) {
+    query.status = status;
+  }
+  Task.find(query, function (err, tasks) {
+    if (err) {
+      return deferred.reject(err);
+    }
+    deferred.resolve(tasks);
+  });
+  return deferred.promise;
+};
+
+User.methods.checkTasks = function () {
+  var Emit = mongoose.model('Emit');
+  var TaskClass = mongoose.model('TaskClass');
+  var Task = mongoose.model('Task');
+  Emit.find({
+    $or: [
+      {all: true},
+      {target: {$in: [this._id]}}
+  ]}, function (err, newTasks) {
+    var tasks = [];
+    newTasks.forEach(function (emit) {
+      //var task = 
+    });
+  });
 };
 
 module.exports = User;

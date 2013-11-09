@@ -13,9 +13,6 @@ var config = require('./config.json');
 var models = db(config.mongodb, path.join(__dirname, 'models'));
 app.models = models;
 
-// init socket.io
-events(path.join(__dirname, 'events'));
-
 // all environments
 app.set('port', process.env.PORT || config.port);
 app.set('views', path.join(__dirname, 'views'));
@@ -35,6 +32,9 @@ if ('development' == app.get('env')) {
 
 routes(path.join(__dirname, 'controllers'), app);
 
-http.createServer(app).listen(app.get('port'), config.host, function(){
+var server = http.createServer(app).listen(app.get('port'), config.host, function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+// init socket.io
+events(path.join(__dirname, 'events'), server);
