@@ -1,12 +1,12 @@
 {
   "manifest_version": 2,
 
-  "name": "One-click Kittens",
-  "description": "This extension demonstrates a browser action with kittens.",
+  "name": "TouchCat",
+  "description": "This extension is TouchCat.",
   "version": "0.2",
 
   "permissions": [
-    "*/*"
+    "tabs"
   ],
   "browser_action": {
     "default_icon": "icon.png",
