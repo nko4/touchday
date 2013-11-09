@@ -5,6 +5,9 @@ var http = require('http');
 var path = require('path');
 var db = require('./lib/db');
 
+// connect database and create models
+db('mongodb://localhost/test', path.join(__dirname, 'models'));
+
 var app = express();
 
 // all environments
