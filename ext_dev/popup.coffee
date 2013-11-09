@@ -1,3 +1,3 @@
 $ ->
   $('#login').on 'click', () ->
-    chrome.tabs.create({url:"http://localhost:8080/user/authorize"})
+    chrome.tabs.create({url:"http://touchday.2013.nodeknockout.com/user/authorize"})

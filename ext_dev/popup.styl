@@ -1,3 +1,22 @@
 body
   min-width: 357px
   overflow-x: hidden
+
+@keyframes action
+  from 
+    background-position: 0% 0%
+  to
+    background-position: 100% 0%
+
+.cat
+  display: block
+  width: 300px
+  height: 300px
+  background: url('./action/output.png');
+  background-repeat: no-repeat
+  // background-size: cover
+  -webkit-animation-duration: 0.5s
+  -webkit-animation-name: action
+  -webkit-animation-timing-function: steps(9)
+  -webkit-animation-iteration-count: infinite
+  -webkit-animation-direction: alternate
