@@ -16,6 +16,8 @@ module.exports = function (socket) {
       }, function (err) {
         cb(500);
       });
+    } else {
+      cb(500);
     }
   });
 
