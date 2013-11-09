@@ -13,12 +13,13 @@ types.url = function (data, val, cb) {
 
 var TaskClass = new Schema({
   name: String,
-  description: String,
+  message: String,
   exp: Number,
   type: {
     type: String,
     enum: Object.keys(types)
   },
+  url: String,
   value: String
 });
 

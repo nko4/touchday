@@ -1,6 +1,7 @@
 'use strict';
 
 var app = require('../lib/app');
+var sockets = require('../sockets');
 
 module.exports = function (socket) {
   var models = app.models;
@@ -12,6 +13,7 @@ module.exports = function (socket) {
     if (data.what === 'my ass') {
       Token.getUser(data.token).then(function (user) {
         me = user.toJSON();
+        sockets[me._id] = socket;
         cb(200, 'iamblue >///<');
       }, function (err) {
         cb(500);
@@ -79,5 +81,11 @@ module.exports = function (socket) {
     }, function (err) {
       cb(500);
     });
+  });
+
+  socket.on('disconnect', function () {
+    if (me) {
+      delete sockets[me._id];
+    }
   });
 };
