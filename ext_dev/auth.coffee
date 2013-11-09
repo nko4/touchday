@@ -1,7 +1,7 @@
 $ ->
-  taken = /token=([^&]+)/i.exec(location.href)
-  if taken
+  token = /token=([^&]+)/i.exec(location.href)
+  if token
     chrome.runtime.sendMessage 
       v: "set_config"
-      key: 'taken'
-      value: taken[1]
+      key: 'token'
+      value: token[1]
