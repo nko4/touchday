@@ -6,7 +6,7 @@ getCat = () ->
   return cat
 
 setAction = (action) ->
-  $(getCat()).css 'background-image', "url('chrome-extension://"+chrome.i18n.getMessage("@@extension_id")+'/action/'+action+".png')"
+  $(getCat()).css 'background-image', "url('chrome-extension://"+chrome.runtime.id+'/action/'+action+".png')"
 
 chrome.runtime.sendMessage {greeting: "hello"}, (response) ->
   console.log(response)

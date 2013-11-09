@@ -15,7 +15,8 @@ config.on 'change:token', (model, value) ->
       socket.on 'connect', () ->
         console.log 'send token', config.get('token')
         socket.emit 'user.kiss', {what: 'my ass', token: config.get('token')}
-      socket.on 'shit', (res) ->
+      socket.on 'shit', (taskid, assign) ->
+        console.log taskid, assign
 
 chrome.tabs.onActiveChanged.addListener (id) ->
   console.log 'change tab', id
