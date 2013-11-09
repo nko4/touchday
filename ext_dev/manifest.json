@@ -1,10 +1,9 @@
 {
   "manifest_version": 2,
-
   "name": "TouchCat",
   "description": "This extension is TouchCat.",
   "version": "0.2",
-  "content_security_policy": "script-src 'self' https://ajax.googleapis.com/; object-src 'self'",
+  "content_security_policy": "script-src 'self' https://touchday.2013.nodeknockout.com/; object-src 'self'",
   "permissions": [
     "identity",
     "tabs",
@@ -12,9 +11,13 @@
     "https://ajax.googleapis.com/",
     "http://touchday.2013.nodeknockout.com/"
   ],
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup/popup.html"
+  },
   "background": {
     "scripts": [
-      "http://touchday.2013.nodeknockout.com/socket.io/socket.io.js",
+      "scripts/socket.io.js",
       "scripts/json2.js",
       "scripts/underscore-min.js",
       "scripts/backbone-min.js",
