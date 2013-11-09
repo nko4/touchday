@@ -9,7 +9,8 @@ var app = require('./lib/app');
 var config = require('./config.json');
 
 // connect database and create models
-db('mongodb://localhost/test', path.join(__dirname, 'models'));
+var models = db(config.mongodb, path.join(__dirname, 'models'));
+app.models = models;
 
 // all environments
 app.set('port', process.env.PORT || config.port);
