@@ -66,19 +66,40 @@ User.methods.getTasks = function (status) {
 };
 
 User.methods.checkTasks = function () {
+  var deferred = Q.defer();
   var Emit = mongoose.model('Emit');
   var TaskClass = mongoose.model('TaskClass');
   var Task = mongoose.model('Task');
+  var user = this;
   Emit.find({
     $or: [
       {all: true},
-      {target: {$in: [this._id]}}
+      {target: {$in: [user._id]}}
   ]}, function (err, newTasks) {
-    var tasks = [];
+    var promises = [];
     newTasks.forEach(function (emit) {
-      //var task = 
+      var innerDeferred = Q.defer();
+      promises.push(innerDeferred.promise);
+      TaskClass.findOne({
+        _id: emit.taskClass
+      }, function (err, taskClass) {
+        if (err) {
+          return innerDeferred.reject(err);
+        }
+        Task.create({
+          taskClass: taskClass._id,
+          user: user._id
+        }, function (err) {
+          if (err) {
+            return innerDeferred.reject(err);
+          }
+          innerDeferred.resolve();
+        });
+      });
     });
+    deferred.all(promises);
   });
+  return deferred.promise;
 };
 
 module.exports = User;

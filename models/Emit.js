@@ -8,6 +8,7 @@ var Emit = new Schema({
     type: Boolean,
     default: false
   },
+  taskClass: ObjectId,
   target: [ObjectId],
   enable: {
     type: Boolean,

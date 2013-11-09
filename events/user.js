@@ -27,6 +27,14 @@ module.exports = function (socket) {
     cb(200, !!me);
   });
 
+  socket.on('user.tasks.check', function (cb) {
+    User.checkTasks().then(function () {
+      cb(200);
+    }, function () {
+      cb(500);
+    });
+  });
+
   socket.on('user.tasks', function (status, cb) {
     if (typeof status === 'function') {
       cb = status;
@@ -39,10 +47,27 @@ module.exports = function (socket) {
     });
   });
 
-  socket.on('user.tasks.check', function (cb) {
+  socket.on('user.tasks.new', function (cb) {
+    User.getTasks('new').then(function (tasks) {
+      cb(200, tasks);
+    }, function (err) {
+      cb(500);
+    });
   });
 
-  socket.on('user.tasks.new', function () {
-    
+  socket.on('user.tasks.success', function (cb) {
+    User.getTasks('success').then(function (tasks) {
+      cb(200, tasks);
+    }, function (err) {
+      cb(500);
+    });
+  });
+
+  socket.on('user.tasks.failed', function (cb) {
+    User.getTasks('failed').then(function (tasks) {
+      cb(200, tasks);
+    }, function (err) {
+      cb(500);
+    });
   });
 };
