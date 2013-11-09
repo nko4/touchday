@@ -102,4 +102,34 @@ User.methods.checkTasks = function () {
   return deferred.promise;
 };
 
+User.methods.taskDone = function (taskId, data) {
+  var deferred = Q.defer();
+  var TaskClass = mongoose.model('TaskClass');
+  var Task = mongoose.model('Task');
+  Task.findOne({
+    _id: taskId
+  }, function (err, task) {
+    if (err) {
+      return deferred.reject(err);
+    }
+    TaskClass.findOne({
+      _id: task.taskClass
+    }, function (err, taskClass) {
+      if (err) {
+        return deferred.reject(err);
+      }
+      taskClass.check(data).then(function (success) {
+        task.status = success ? 'success': 'failed';
+        task.save(function (err) {
+          if (err) {
+            return deferred.reject(err);
+          }
+          deferred.resolve(success);
+        });
+      }, deferred.reject);
+    });
+  });
+  return deferred.promise;
+};
+
 module.exports = User;

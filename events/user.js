@@ -70,4 +70,12 @@ module.exports = function (socket) {
       cb(500);
     });
   });
+
+  socket.on('user.task.done', function (data, cb) {
+    User.taskDone(data).then(function (success) {
+      cb(200, success);
+    }, function (err) {
+      cb(500);
+    });
+  });
 };

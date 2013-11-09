@@ -1,5 +1,6 @@
 'use strict';
 
+var Q = require('q');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
@@ -21,14 +22,20 @@ var TaskClass = new Schema({
   value: String
 });
 
-TaskClass.methods.check = function (data, cb) {
-  cb || (cb = function () {});
+TaskClass.methods.check = function (data) {
+  var deferred = Q.defer();
   var check = types[this.type];
   if (check) {
-    check(data, this.value, cb);
+    check(data, this.value, function (err, success) {
+      if (err) {
+        return deferred.reject(err);
+      }
+      deferred.resolve(success);
+    });
   } else {
-    cb();
+    deferred.resolve(false);
   }
+  return deferred.promise;
 };
 
 module.exports = TaskClass;
