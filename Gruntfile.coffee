@@ -52,8 +52,8 @@ module.exports = (grunt) ->
       main: 
         files: [
           {expand: true, src: ['bower_components/**'], dest: "<%= app.dist %>"}
-          {expand: true, cwd:'<%= app.dev %>/', src: ['images/**'], dest: "<%= app.dist %>"}
-          {expand: true, cwd:'<%= app.dev %>/', src: ['*.ico','{,**/}*.js','{,**/}*.css','{,**/}*.html'], dest: "<%= app.dist %>"}
+          {expand: true, cwd:'<%= app.dev %>/', src: ['images/**','{,**/}*.png'], dest: "<%= app.dist %>"}
+          {expand: true, cwd:'<%= app.dev %>/', src: ['*.ico','{,**/}*.js','{,**/}*.css','{,**/}*.html','{,**/}*.json'], dest: "<%= app.dist %>"}
         ]
     watch:
       jade:
@@ -66,7 +66,7 @@ module.exports = (grunt) ->
         files: ["<%= app.dev %>/{,**/}*.styl"]
         tasks: ["stylus"]
       other:
-        files: ["<%= app.dev %>/{,**/}*.js","<%= app.dev %>/{,**/}*.css","<%= app.dev %>/{,**/}*.html","<%= app.dev %>/images/**"]
+        files: ["<%= app.dev %>/{,**/}*"]
         tasks: ["copy"]
     connect:
       server:
@@ -78,11 +78,15 @@ module.exports = (grunt) ->
       #   options:
       #     middleware: (connect) ->
       #       [mountFolder(connect, "<%= app.dist %>")]
-  # grunt.config 'app',
-  #   dev: 'ext_dev'
-  #   dist: 'ext'
-  grunt.config 'app',
-    dev: 'frontend'
-    dist: 'public'
 
+  if process.argv[2] is 'frontend'
+    grunt.config 'app',
+      dev: 'frontend'
+      dist: 'public'
+  else
+    grunt.config 'app',
+      dev: 'ext_dev'
+      dist: 'ext'
+
+  grunt.registerTask "frontend", ["clean","copy","concurrent", "connect",  "watch"]
   grunt.registerTask "default", ["clean","copy","concurrent", "connect",  "watch"]
