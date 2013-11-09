@@ -23,7 +23,7 @@ module.exports = function (io, models) {
             if (err) {
               throw err;
             }
-            sockets[user._id].emit('shit', task.toJSON());
+            sockets[user._id].emit('shit', task._id, taskClass.toJSON());
           });
         }
       });
