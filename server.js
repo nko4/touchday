@@ -6,11 +6,15 @@ var express = require('express');
 var db = require('./lib/db');
 var routes = require('./lib/routes');
 var app = require('./lib/app');
+var events = require('./lib/events');
 var config = require('./config.json');
 
 // connect database and create models
 var models = db(config.mongodb, path.join(__dirname, 'models'));
 app.models = models;
+
+// init socket.io
+events(path.join(__dirname, 'events'));
 
 // all environments
 app.set('port', process.env.PORT || config.port);

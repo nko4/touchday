@@ -28,6 +28,7 @@ userCtrl.callback = {
   fn: function (req, res, next) {
     var code = req.query.code;
     var User = models.User;
+    var Token = models.Token;
     if (!code) {
       return next();
     }
@@ -45,18 +46,29 @@ userCtrl.callback = {
       });
     })
     .then(function (user) {
-      res.jsonp({
-        success: true,
-        user: {
-          id: user._id,
-          name: user.name,
-          login: user.login,
-          avatar: user.avatar_url,
-          location: user.location
-        }
-      });
-    }, function (err) {
-      next(err);
+      return Token.generate(user);
     })
+    .then(function (token) {
+      res.redirect('/login-success?token=' + token._id);
+    }, function (err) {
+      console.log(err);
+      res.redirect('/login-failed');
+    })
+  }
+};
+
+userCtrl.loginSuccess = {
+  path: '/login-success',
+  method: 'get',
+  fn: function (req, res, next) {
+    res.send('SUCCESS');
+  }
+};
+
+userCtrl.loginFailed = {
+  path: '/login-failed',
+  method: 'get',
+  fn: function (req, res, next) {
+    res.send('FAILED');
   }
 };
