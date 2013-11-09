@@ -4,6 +4,7 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var db = require('./lib/db');
+var routes = require('./lib/routes');
 
 // connect database and create models
 db('mongodb://localhost/test', path.join(__dirname, 'models'));
@@ -26,6 +27,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
+
+routes(path.join(__dirname, 'controllers'), app);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
