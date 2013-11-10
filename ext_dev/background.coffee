@@ -15,14 +15,18 @@ config.on 'change:token', (model, value) ->
       socket.on 'connect', () ->
         console.log 'send token', config.get('token')
         socket.emit 'user.kiss', {what: 'my ass', token: config.get('token')}
+      socket.on 'shit', (taskid, assign) ->
+        console.log taskid, assign
 
 chrome.tabs.onActiveChanged.addListener (id) ->
+  console.log 'change tab', id
   chrome.tabs.sendMessage id,
     v: 'assign'
     action: 'xyz'
 
-chrome.tabs.onActiveChanged.addListener (id,status,tab) ->
-  if status.status is 'loading' and tab.active
+chrome.tabs.onUpdated.addListener (id,status,tab) ->
+  if tab.active
+    console.log 'update tab', id
     chrome.tabs.sendMessage id,
       v: 'assign'
       action: 'xyz'

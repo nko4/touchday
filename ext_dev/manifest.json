@@ -4,6 +4,9 @@
   "description": "This extension is TouchCat.",
   "version": "0.2",
   "content_security_policy": "script-src 'self' https://touchday.2013.nodeknockout.com/; object-src 'self'",
+  "web_accessible_resources": [
+    "action/*.png"
+  ],
   "permissions": [
     "identity",
     "tabs",
@@ -12,7 +15,7 @@
     "http://touchday.2013.nodeknockout.com/"
   ],
   "browser_action": {
-    "default_icon": "icon.png",
+    "default_icon": "icon16.png",
     "default_popup": "popup/popup.html"
   },
   "background": {
@@ -24,10 +27,15 @@
       "background.js"
     ]
   },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
   "content_scripts": [{
     "matches": ["http://*/*", "https://*/*"],
-    // "css": ["mygooglestyles.css"],
-    "js": ["scripts/jquery.min.js"]
+    "css": ["content/content.css"],
+    "js": ["scripts/jquery.min.js","content/content.js"]
   },{
     "matches": ["http://touchday.2013.nodeknockout.com/login-success*"],
     "js": ["scripts/jquery.min.js", "auth.js"]
