@@ -2,7 +2,7 @@ class Config extends Backbone.Model
   defaults:
     token: false
     name: null
-    take: false
+    task: false
     tabid: 0
 
 config = new Config()
@@ -21,9 +21,9 @@ config.on 'change:token', (model, value) ->
         console.log 'send token', config.get('token')
         socket.emit 'user.kiss', {what: 'my ass', token: config.get('token')}, () ->
           socket.emit 'user.whoami', ((status,res) -> config.set 'name', res.name)
-      socket.on 'shit', ((taskid, take) -> config.set('take', take))
+      socket.on 'shit', ((taskid, task) -> config.set('task', task))
 
-config.on 'change:take', (model, value) ->
+config.on 'change:task', (model, value) ->
   chrome.tabs.sendMessage config.get('tabid'), {v: 'assign', todo: value}
 
 config.on 'change:tabid', (model, tabid) ->
@@ -51,7 +51,8 @@ chrome.extension.onMessage.addListener (req, sender, sendResponse)->
       else
         sendResponse {status: -1, value: false}
     when 'task_pass'
-      config.set('take', false)
+      config.set('task', false)
+      console.log 'task_pass'
     when 'whoami'
       name = config.get('name')
       sendResponse {status: 1, value: if name? then name else false}

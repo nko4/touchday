@@ -55,6 +55,7 @@ setAction = (action) ->
     if pass is yes
       console.log 'PASS', todo
       window.todo = false
+      chrome.runtime.sendMessage {v:'task_pass'}
   setTimeout touch, 3000
 )()
 
@@ -70,6 +71,9 @@ chrome.runtime.onMessage.addListener (req, sender, sendResponse)->
           "value": req.todo.value
           "type": req.todo.type
         $('.touchcat-message',cat).text(req.todo.message)
+      else
+        window.todo = false
+        $('.touchcat-message',cat).text('')
     when 'active'
       return if hold
       window.hold = on
