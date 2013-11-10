@@ -1,4 +1,3 @@
-action = ['yawn','walk_normal_tails','sleep','hungry','walk_normal']
 
 getCat = () ->
   cat = $('#touchcat-cat')
@@ -17,7 +16,8 @@ getCat = () ->
         $('body').removeAttr('onselectstart')
         $(cat).css('right', (100 - ($(cat).position().left+300) / $(window).width() * 100)+'%')
         $(cat).css('bottom', '0%')
-        setAction('front_swing_nose')
+        setAction('drag')
+        setTimeout (->setAction('front_swing_tails')), 500
 
   return cat
 
@@ -29,4 +29,7 @@ setAction = (action) ->
 chrome.runtime.onMessage.addListener (req, sender, sendResponse)->
   switch req.v
     when 'assign'
-      setAction('yawn')
+      setAction('yawn') if req.todo
+    when 'active'
+      setAction('walk_normal')
+      setTimeout (->setAction('walk_normal_tails')), 1000
