@@ -98,7 +98,7 @@ chrome.tabs.onUpdated.addListener(function(id, status, tab) {
 });
 
 chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
-  var name, value;
+  var fish, name, value;
   switch (req.v) {
     case 'set_config':
       config.set(req.key, req.value);
@@ -128,6 +128,15 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
         life: config.get('life'),
         fish: config.get('fish')
       });
+    case 'eat':
+      if (req.value > 0) {
+        fish = config.get('fish') + req.value;
+        if (fish > 100) {
+          fish = 100;
+        }
+        return config.set('fish', fish);
+      }
+      break;
     case 'whoami':
       name = config.get('name');
       return sendResponse({

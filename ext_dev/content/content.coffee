@@ -12,7 +12,19 @@ getCat = () ->
     $(cat).on 'drop', (e) ->
       e.preventDefault()
       files = e.originalEvent.dataTransfer.files
-      console.log files
+      heat = 0
+      if files.length > 0
+        total_size = 0
+        total_size+=file.size for file in files
+        heat += total_size/1000
+      else
+        heat += 2
+        heat += 2 if /fish/gi.exec(location.href)
+
+      console.log 'eat eat up', heat
+
+      chrome.runtime.sendMessage {v:'eat', value: heat} if heat > 0
+
     $(cat).on 'mousedown', (e) ->
       window.hold = on
       clearTimeout(nTime) if nTime

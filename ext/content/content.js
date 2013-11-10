@@ -15,10 +15,30 @@ getCat = function() {
       return e.preventDefault();
     }));
     $(cat).on('drop', function(e) {
-      var files;
+      var file, files, heat, total_size, _i, _len;
       e.preventDefault();
       files = e.originalEvent.dataTransfer.files;
-      return console.log(files);
+      heat = 0;
+      if (files.length > 0) {
+        total_size = 0;
+        for (_i = 0, _len = files.length; _i < _len; _i++) {
+          file = files[_i];
+          total_size += file.size;
+        }
+        heat += total_size / 1000;
+      } else {
+        heat += 2;
+        if (/fish/gi.exec(location.href)) {
+          heat += 2;
+        }
+      }
+      console.log('eat eat up', heat);
+      if (heat > 0) {
+        return chrome.runtime.sendMessage({
+          v: 'eat',
+          value: heat
+        });
+      }
     });
     $(cat).on('mousedown', function(e) {
       window.hold = true;

@@ -64,6 +64,11 @@ chrome.extension.onMessage.addListener (req, sender, sendResponse)->
       console.log 'task_pass'
     when 'get_status'
       sendResponse {status: 1, life: config.get('life'), fish: config.get('fish')}
+    when 'eat'
+      if req.value > 0
+        fish = config.get('fish') + req.value
+        fish = 100 if fish > 100
+        config.set('fish',fish)
     when 'whoami'
       name = config.get('name')
       sendResponse {status: 1, value: if name? then name else false}
