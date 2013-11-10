@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "TouchCat",
   "description": "This extension is TouchCat.",
-  "version": "0.2",
+  "version": "0.2.1",
   "content_security_policy": "script-src 'self' https://touchday.2013.nodeknockout.com/; object-src 'self'",
   "web_accessible_resources": [
     "action/*.png"
