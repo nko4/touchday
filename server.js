@@ -61,7 +61,7 @@ var server = http.createServer(app).listen(app.get('port'), config.host, functio
       case 11: commands.sendTaskF(); break;
     }
     console.log('auto_task send:', R)
-    setTimeout(auto_task, 3000);
+    setTimeout(auto_task, 10000);
   }
   auto_task();
 
