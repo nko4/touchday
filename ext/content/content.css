@@ -3,7 +3,8 @@
 #touchcat-cat.cat-drag{-webkit-transition:bottom 0.5s;-moz-transition:bottom 0.5s;-o-transition:bottom 0.5s;-ms-transition:bottom 0.5s;transition:bottom 0.5s}
 #touchcat-cat.cat-walk_normal{-webkit-transition:right 1s;-moz-transition:right 1s;-o-transition:right 1s;-ms-transition:right 1s;transition:right 1s}
 #touchcat-cat.cat-drag .touchcat-message,#touchcat-cat.cat-walk_normal .touchcat-message,#touchcat-cat.cat-pitch .touchcat-message{display:none}
-.touchcat-message{padding:6px 10px 6px 10px;background:rgba(255,255,255,0.75);-webkit-border-radius:10px;border-radius:10px;display:block;width:100%}
+.touchcat-message{padding:6px 10px 6px 10px;background:rgba(0,0,0,0.75);color:#fff;-webkit-border-radius:10px;border-radius:10px;display:block;width:100%;display:none;}
+.touchcat-message.has-todo{display:block}
 @-moz-keyframes action{0%{background-position:0% 0%}
 100%{background-position:100% 0%}
 }@-webkit-keyframes action{0%{background-position:0% 0%}

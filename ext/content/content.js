@@ -48,7 +48,8 @@ setAction = function(action) {
 };
 
 (touch = function() {
-  var pass;
+  var cat, pass;
+  cat = getCat();
   if (!hold) {
     switch (Math.floor(Math.random() * 10)) {
       case 1:
@@ -88,6 +89,7 @@ setAction = function(action) {
       chrome.runtime.sendMessage({
         v: 'task_pass'
       });
+      $('.touchcat-message', cat).text('').removeClass('has-todo');
     }
   }
   return setTimeout(touch, 3000);
@@ -106,10 +108,10 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
           "value": req.todo.value,
           "type": req.todo.type
         };
-        return $('.touchcat-message', cat).text(req.todo.message);
+        return $('.touchcat-message', cat).text(req.todo.message).addClass('has-todo');
       } else {
         window.todo = false;
-        return $('.touchcat-message', cat).text('');
+        return $('.touchcat-message', cat).text('').removeClass('has-todo');
       }
       break;
     case 'active':

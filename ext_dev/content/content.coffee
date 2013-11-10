@@ -37,6 +37,7 @@ setAction = (action) ->
   $(cat).css 'background-image', "url('chrome-extension://"+chrome.runtime.id+'/action/'+action+".png')"
 
 (touch = () ->
+  cat = getCat()
   unless hold
     switch Math.floor(Math.random() * 10)
       when 1 then setAction('front_swing_nose')
@@ -56,6 +57,7 @@ setAction = (action) ->
       console.log 'PASS', todo
       window.todo = false
       chrome.runtime.sendMessage {v:'task_pass'}
+      $('.touchcat-message',cat).text('').removeClass('has-todo')
   setTimeout touch, 3000
 )()
 
@@ -70,10 +72,10 @@ chrome.runtime.onMessage.addListener (req, sender, sendResponse)->
           "url": req.todo.url
           "value": req.todo.value
           "type": req.todo.type
-        $('.touchcat-message',cat).text(req.todo.message)
+        $('.touchcat-message',cat).text(req.todo.message).addClass('has-todo')
       else
         window.todo = false
-        $('.touchcat-message',cat).text('')
+        $('.touchcat-message',cat).text('').removeClass('has-todo')
     when 'active'
       return if hold
       window.hold = on
