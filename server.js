@@ -1,6 +1,9 @@
 'use strict';
 
-require('nko')('touchday.2013');
+require('nko')('touchday.2013', function(err, res) {
+  if (err) throw err;
+  res.on('data', function(d) { console.log(d.toString()); });
+});
 
 var http = require('http');
 var path = require('path');
