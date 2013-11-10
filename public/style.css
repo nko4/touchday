@@ -67,6 +67,9 @@ a {
   line-height: 100px;
   font-size: 16px;
   color: #FFF;
+  overflow: hidden;
+  text-indent: 100%;
+  background: url(./images/loading.png) no-repeat center center;
 }
 
 .video-slogan {
