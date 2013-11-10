@@ -1,0 +1,8 @@
+{
+  "host": "127.0.0.1",
+  "port": 8080,
+  "mongodb": "mongodb://127.0.0.1/touchday",
+  "github.ClientID": "533ebceb86560b7d740d",
+  "github.ClientSecret": "2594a2445a6a0627e5b3e439cf6584270e57f8ed",
+  "github.redirectUri": "/user/login-callback"
+}
