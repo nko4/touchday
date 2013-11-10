@@ -137,7 +137,8 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
       break;
     case 'task_pass':
       config.set('task', false);
-      return console.log('task_pass');
+      console.log('task_pass');
+      return config.set('life', config.get('life') + 5);
     case 'get_status':
       return sendResponse({
         status: 1,
@@ -148,6 +149,7 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
       });
     case 'eat':
       if (req.value > 0) {
+        console.log('eat eat', req.value);
         fish = config.get('fish') + req.value;
         if (fish > 100) {
           fish = 100;

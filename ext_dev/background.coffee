@@ -71,6 +71,7 @@ chrome.extension.onMessage.addListener (req, sender, sendResponse)->
     when 'task_pass'
       config.set('task', false)
       console.log 'task_pass'
+      config.set('life', config.get('life') + 5)
     when 'get_status'
       sendResponse
         status: 1
@@ -80,6 +81,7 @@ chrome.extension.onMessage.addListener (req, sender, sendResponse)->
         photo: config.get('photo')
     when 'eat'
       if req.value > 0
+        console.log 'eat eat', req.value
         fish = config.get('fish') + req.value
         fish = 100 if fish > 100
         config.set('fish',fish)
