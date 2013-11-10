@@ -1,0 +1,433 @@
+@import url(./reset.css);
+
+body {
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  font-family: 'Bree Serif';
+}
+
+a {
+  text-decoration: none;
+  outline: none;
+}
+
+.section {
+  position: relative;
+  min-height: 768px;
+  overflow: hidden;
+}
+
+/** VIDEO **/
+#video-section {
+  overflow: hidden;
+  background: url(images/preview.jpg) no-repeat top center fixed;
+  -webkit-background-size: cover;
+}
+
+#video {
+  position: absolute;
+  left: 50%;
+  top: 0%;
+  opacity: 0;
+  -webkit-transition: opacity .5s;
+  -moz-transition: opacity .5s;
+  -ms-transition: opacity .5s;
+  -o-transition: opacity .5s;
+  transition: opacity .5s;
+}
+
+#video.display {
+  opacity: 1;
+}
+
+.video-loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .8);
+  transition: opacity .5s;
+  opacity: 0;
+  z-index: 1;
+}
+
+.video-loading.display {
+  opacity: 1;
+}
+
+.video-loading__label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100px;
+  height: 100px;
+  margin-left: -50px;
+  margin-top: -50px;
+  text-align: center;
+  line-height: 100px;
+  font-size: 16px;
+  color: #FFF;
+}
+
+.video-slogan {
+  opacity: 0;
+  z-index: 2;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .6);
+  transition: opacity .5s;
+}
+
+.video-slogan.display {
+  opacity: 1;
+}
+
+.video-slogan__text {
+  font-family: 'Just Another Hand';
+  color: #FFF;
+  width: 800px;
+  height: 172px;
+  line-height: 172px;
+  font-size: 86px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -86px;
+  margin-left: -410px;
+  text-align: center;
+  letter-spacing: 8px;
+}
+
+.video-slogan__text span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.video-slogan__text__your {
+  width: 125px;
+  height: 172px;
+  background: url(./images/your.png);
+  overflow: hidden;
+  text-indent: 100%;
+  margin: 0 40px;
+}
+
+.video-slogan__letter {
+  display: inline-block;
+  opacity: 0;
+  -webkit-transform: rotateZ(10deg);
+  transition: all .5s;
+}
+
+.video-slogan__letter.display {
+  opacity: 1;
+  display: inline-block;
+  -webkit-transform: rotateZ(0deg);
+}
+
+/** menu **/
+#menu {
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 9999999;
+  width: 70px;
+  height: 100%;
+  background: #121212;
+  text-align: center;
+  border-left: 1px #1d1d1d solid;
+  opacity: 0;
+  transition: opacity .5s;
+}
+
+#menu.display {
+  opacity: .8;
+}
+
+.menu__sections {
+  line-height: 10px;
+  position: relative;
+  top: 50%;
+  left: 0;
+}
+
+.menu__sections__item {
+  display: inline-block;
+  list-style: none;
+  width: 100%;
+  height: 14px;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 15px;
+}
+
+.menu__sections__btn {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #201b18;
+  text-indent: 100%;
+  border: 2px #4d4d4d solid;
+  transition: all .5s;
+}
+
+.menu__sections__btn:hover,
+.menu__sections__item.current .menu__sections__btn {
+  box-shadow: inset 0 2px 2px #8f1722;
+  border-color: #777;
+  background: #be1e2d;
+}
+
+.menu__sections__download {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 14px;
+  background: url(./images/download.png);
+  cursor: pointer;
+}
+
+.menu__sections__download:after {
+  position: absolute;
+  width: 1px;
+}
+
+.menu__alert {
+  position: absolute;
+  right: 50%;
+  bottom: 10px;
+  width: 25px;
+  height: 25px;
+  margin-right: -12.5px;
+  cursor: pointer;
+  background: url(./images/alert.png);
+}
+
+.video-scroll-down {
+  width: 90px;
+  height: 102px;
+  background: url(./images/scroll_down.png) left;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -45px;
+  margin-top: 120px;
+  z-index: 2;
+}
+
+#drag-section {
+  background: url(images/section2.png) no-repeat center center fixed;
+  background-size: cover;
+}
+
+.drag-section__mac {
+  background: url(./images/mac.png);
+  width: 1094px;
+  height: 675px;
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  margin-top: -337.5px;
+  margin-right: -100px;
+}
+
+.drag-section__opps {
+  font-family: 'Just Another Hand';
+  position: absolute;
+  width: 300px;
+  line-height: 110px;
+  font-size: 105px; 
+  left: 50%;
+  top: 50%;
+  margin-top: -190px;
+  margin-left: 80px;
+  color: #FFF;
+  text-shadow: 0 3px 4px rgba(0, 0, 0, .75);
+  letter-spacing: 6px;
+}
+
+.drag-section__take-a-break {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .75);
+  letter-spacing: 3px;
+  position: absolute;
+  width: 300px;
+  line-height: 60px;
+  font-size: 32px;
+  left: 50%;
+  top: 50%;
+  margin-top: -90px;
+  margin-left: 80px;
+  color: #FFF;
+}
+
+#pitch-section {
+  background: url(images/section3.png) no-repeat center center fixed;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.pitch-section__hand {
+  background: url(images/hand.png);
+  width: 876px;
+  height: 695px;
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  margin-right: -826px;
+  margin-top: -340px;
+}
+
+.pitch-section__touch-cat {
+  font-family: 'Just Another Hand';
+  position: absolute;
+  width: 400px;
+  line-height: 110px;
+  font-size: 86px; 
+  left: 50%;
+  top: 50%;
+  margin-top: -20px;
+  margin-left: -420px;
+  color: #FFF;
+  text-shadow: 0 3px 4px rgba(0, 0, 0, .75);
+  letter-spacing: 8px;
+}
+
+.pitch-section__feed {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .75);
+  letter-spacing: 3px;
+  position: absolute;
+  width: 400px;
+  line-height: 60px;
+  font-size: 36px;
+  left: 50%;
+  top: 50%;
+  margin-top: 130px;
+  margin-left: -420px;
+  color: #FFF;
+}
+
+#cats-section {
+  background: url(images/section3.png) no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
+}
+
+#cats-section:before,
+#cats-section:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #b41c2b;
+  opacity: .9;
+  z-index: 99;
+  left: 0;
+}
+
+#cats-section:before {
+  bottom: 50%;
+  margin-bottom: 150px;
+}
+
+#cats-section:after {
+  top: 50%;
+  margin-top: 150px;
+}
+
+.cats-section__cats {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -600px;
+  margin-top: -1350px;
+  width: 100%;
+  height: 100%;
+}
+
+.cats-section__cats__line {
+  position: relative;
+  float: left;
+}
+
+.cats-section__text {
+  font-family: 'Just Another Hand';
+  position: absolute;
+  width: 400px;
+  line-height: 110px;
+  font-size: 86px; 
+  left: 50%;
+  top: 50%;
+  margin-top: -320px;
+  margin-left: -200px;
+  color: #FFF;
+  text-shadow: 0 3px 4px rgba(0, 0, 0, .75);
+  letter-spacing: 8px;
+  z-index: 333;
+}
+
+#intro-section {
+  background: url(images/section3.png) no-repeat center center fixed;
+  background-size: cover;
+}
+
+.intro-section__mbp {
+  width: 1094px;
+  height: 631px;
+  background: url(./images/mbp.png);
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  margin-right: -1000px;
+  margin-top: -315px;
+}
+
+.intro-section__mbp__screen {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 38px;
+  bottom: 72px;
+  overflow: hidden;
+}
+
+.intro-section__mbp__screen__login {
+  background: url(./images/login.png);
+  width: 588px;
+  height: 427px;
+  position: absolute;
+  top: 45px;
+  left: 200px;
+}
+
+.intro-section__text {
+  position: absolute;
+  width: 400px;
+  left: 50%;
+  top: 50%;
+  margin-left: -500px;
+  margin-top: -300px;
+  color: #FFF;
+}
+
+.intro-section__text__title {
+  font-family: 'Just Another Hand';
+  line-height: 2em;
+  font-size: 86px;
+  text-shadow: 0 3px 4px rgba(0, 0, 0, .75);
+  letter-spacing: 6px;
+}
+
+.intro-section__text__list {
+  list-style: none;
+  line-height: 2em;
+  font-size: 36px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .75);
+  text-indent: -20px;
+  margin-left: 10px;
+}
