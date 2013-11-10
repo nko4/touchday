@@ -2,8 +2,15 @@ $ ->
   life = 0
   fish = 0
   $.photo = null
+  $.service = on
   $('#login .btn-login').on 'click', () ->
     chrome.tabs.create({url:"http://touchday.2013.nodeknockout.com/user/authorize"})
+  $('#info .photo').on 'click', ()->
+    if $.service
+      chrome.runtime.sendMessage {v:'stop'}
+    else
+      chrome.runtime.sendMessage {v:'start'}
+    $.service = !$.service
 
   chrome.runtime.sendMessage {v:'whoami'}, (res) ->
     if res.value isnt no
@@ -39,7 +46,8 @@ $ ->
     fish = res.fish
     if res.photo
       $.photo = res.photo
-      $('#info .photo').css("background-image: url('"+$.photo+"')")
+      $('#info .photo').css("background-image","url('"+$.photo+"')")
+    $.service = res.service
 
   chrome.runtime.onMessage.addListener (req, sender, sendResponse)->
     switch req.v

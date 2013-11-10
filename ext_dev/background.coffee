@@ -7,6 +7,7 @@ class Config extends Backbone.Model
     photo: null
     life: 20
     fish: 20
+    service: on
 
 config = new Config()
 
@@ -40,9 +41,13 @@ config.on 'change:life change:fish', (model) ->
     life: config.get('life')
     fish: config.get('fish')
 
+config.on 'change:service', (model) ->
+  chrome.tabs.sendMessage config.get('tabid'), {v: 'service', value: config.get('service')}
+
 config.on 'change:tabid', (model, tabid) ->
   chrome.tabs.sendMessage tabid, {v: 'active'}
   chrome.tabs.sendMessage tabid, {v: 'assign', todo: config.get('task')}
+  chrome.tabs.sendMessage tabid, {v: 'service', value: config.get('service')}
 
 chrome.tabs.onActiveChanged.addListener (id) ->
   console.log 'change tab', id
@@ -55,6 +60,10 @@ chrome.tabs.onUpdated.addListener (id,status,tab) ->
 
 chrome.extension.onMessage.addListener (req, sender, sendResponse)->
   switch req.v
+    when 'start'
+      config.set 'service', on
+    when 'stop'
+      config.set 'service', off
     when 'set_config'
       config.set req.key, req.value
       sendResponse {status: 1}
@@ -75,6 +84,7 @@ chrome.extension.onMessage.addListener (req, sender, sendResponse)->
         fish: config.get('fish')
         name: config.get('name')
         photo: config.get('photo')
+        service: config.get('service')
     when 'eat'
       if req.value > 0
         fish = config.get('fish') + req.value
@@ -91,10 +101,18 @@ chrome.extension.onMessage.addListener (req, sender, sendResponse)->
   fish = 0 if fish < 0
   config.set('fish',fish)
   life = config.get('life')
+
   if fish > 85
-    config.set('life', life + 0.1)
+    life + 0.1
   else if fish < 10
-    config.set('life', life - 0.1)
+    life - 0.1
+  
+  if life > 100
+    life = 100
+  else if life < 0
+    life = 0
+  
+  config.set('life', life)
 
   setTimeout heat, 1000
 )()

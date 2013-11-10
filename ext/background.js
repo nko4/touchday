@@ -17,7 +17,8 @@ Config = (function(_super) {
     tabid: 0,
     photo: null,
     life: 20,
-    fish: 20
+    fish: 20,
+    service: true
   };
 
   return Config;
@@ -78,13 +79,24 @@ config.on('change:life change:fish', function(model) {
   });
 });
 
+config.on('change:service', function(model) {
+  return chrome.tabs.sendMessage(config.get('tabid'), {
+    v: 'service',
+    value: config.get('service')
+  });
+});
+
 config.on('change:tabid', function(model, tabid) {
   chrome.tabs.sendMessage(tabid, {
     v: 'active'
   });
-  return chrome.tabs.sendMessage(tabid, {
+  chrome.tabs.sendMessage(tabid, {
     v: 'assign',
     todo: config.get('task')
+  });
+  return chrome.tabs.sendMessage(tabid, {
+    v: 'service',
+    value: config.get('service')
   });
 });
 
@@ -103,6 +115,10 @@ chrome.tabs.onUpdated.addListener(function(id, status, tab) {
 chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
   var fish, name, value;
   switch (req.v) {
+    case 'start':
+      return config.set('service', true);
+    case 'stop':
+      return config.set('service', false);
     case 'set_config':
       config.set(req.key, req.value);
       return sendResponse({
@@ -132,7 +148,8 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
         life: config.get('life'),
         fish: config.get('fish'),
         name: config.get('name'),
-        photo: config.get('photo')
+        photo: config.get('photo'),
+        service: config.get('service')
       });
     case 'eat':
       if (req.value > 0) {
@@ -165,10 +182,16 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
   config.set('fish', fish);
   life = config.get('life');
   if (fish > 85) {
-    config.set('life', life + 0.1);
+    life + 0.1;
   } else if (fish < 10) {
-    config.set('life', life - 0.1);
+    life - 0.1;
   }
+  if (life > 100) {
+    life = 100;
+  } else if (life < 0) {
+    life = 0;
+  }
+  config.set('life', life);
   return setTimeout(heat, 1000);
 })();
 

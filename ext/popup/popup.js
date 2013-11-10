@@ -5,10 +5,23 @@ $(function() {
   life = 0;
   fish = 0;
   $.photo = null;
+  $.service = true;
   $('#login .btn-login').on('click', function() {
     return chrome.tabs.create({
       url: "http://touchday.2013.nodeknockout.com/user/authorize"
     });
+  });
+  $('#info .photo').on('click', function() {
+    if ($.service) {
+      chrome.runtime.sendMessage({
+        v: 'stop'
+      });
+    } else {
+      chrome.runtime.sendMessage({
+        v: 'start'
+      });
+    }
+    return $.service = !$.service;
   });
   chrome.runtime.sendMessage({
     v: 'whoami'
@@ -54,8 +67,9 @@ $(function() {
     fish = res.fish;
     if (res.photo) {
       $.photo = res.photo;
-      return $('#info .photo').css("background-image: url('" + $.photo + "')");
+      $('#info .photo').css("background-image", "url('" + $.photo + "')");
     }
+    return $.service = res.service;
   });
   return chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
     var fish_animate, life_animate;

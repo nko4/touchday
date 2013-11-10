@@ -4,10 +4,16 @@ hold = off
 
 nTime = null
 
+service = on
+
 getCat = () ->
   cat = $('#touchcat-cat')
   if cat.length < 1
     cat = $('<div id="touchcat-cat"><div class="touchcat-message" /></div>').appendTo('body')
+    if todo isnt false
+      $('.touchcat-message',cat).text(todo.message).addClass('has-todo')
+    else
+      $('.touchcat-message',cat).text('').removeClass('has-todo')
     $(cat).on 'dragover', ((e) -> e.preventDefault())
     $(cat).on 'drop', (e) ->
       e.preventDefault()
@@ -54,6 +60,7 @@ setAction = (action) ->
   $(cat).css 'background-image', "url('chrome-extension://"+chrome.runtime.id+'/action/'+action+".png')"
 
 (touch = () ->
+  return if service is off
   cat = getCat()
   unless hold
     switch Math.floor(Math.random() * 10)
@@ -78,9 +85,29 @@ setAction = (action) ->
   setTimeout touch, 3000
 )()
 
-chrome.runtime.onMessage.addListener (req, sender, sendResponse)->
+walk = () ->
+  window.hold = on
   cat = getCat()
+  $(cat).attr('class', '')
+  $(cat).css('right', '-10%')
+  setTimeout () ->
+    setAction('walk_normal')
+    $(cat).css('right', Math.floor(Math.random() * 40)+'%')
+    nTime = setTimeout (->
+      window.hold = off
+      setAction('walk_normal_tails')
+    ), 1000
+  , 500
+
+chrome.runtime.onMessage.addListener (req, sender, sendResponse)->
   switch req.v
+    when 'service'
+      if req.value
+        walk()
+      else
+        $('#touchcat-cat').remove()
+        window.hold = off
+      window.service = req.value
     when 'assign'
       if req.todo
         window.todo = 
@@ -89,20 +116,10 @@ chrome.runtime.onMessage.addListener (req, sender, sendResponse)->
           "url": req.todo.url
           "value": req.todo.value
           "type": req.todo.type
-        $('.touchcat-message',cat).text(req.todo.message).addClass('has-todo')
+        $('.touchcat-message',getCat()).text(req.todo.message).addClass('has-todo') if $('#touchget-cat').length > 0
       else
         window.todo = false
-        $('.touchcat-message',cat).text('').removeClass('has-todo')
+        $('.touchcat-message',getCat()).text('').removeClass('has-todo') if $('#touchcat-cat').length > 0
     when 'active'
-      return if hold
-      window.hold = on
-      $(cat).attr('class', '')
-      $(cat).css('right', '-10%')
-      setTimeout () ->
-        setAction('walk_normal')
-        $(cat).css('right', Math.floor(Math.random() * 40)+'%')
-        nTime = setTimeout (->
-          window.hold = off
-          setAction('walk_normal_tails')
-        ), 1000
-      , 500
+      return if hold or service is off
+      walk()
