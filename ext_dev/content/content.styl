@@ -20,8 +20,21 @@
   animation-timing-function: steps(9)
   animation-iteration-count: infinite
   animation-direction: alternate
+  transition: background-image 0.3s
   &.cat-pitch
     margin-right: -200px
     margin-bottom: -200px
   &.cat-drag
     transition: bottom 0.5s
+  &.cat-walk_normal
+    transition: right 1s
+  &.cat-drag, &.cat-walk_normal, &.cat-pitch
+    .touchcat-message
+      display: none
+
+.touchcat-message
+  padding: 6px 10px 6px 10px
+  background: rgba(255, 255, 255, .75)
+  border-radius: 10px
+  display: block
+  width: 100%
