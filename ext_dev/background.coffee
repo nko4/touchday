@@ -98,9 +98,9 @@ chrome.extension.onMessage.addListener (req, sender, sendResponse)->
   life = config.get('life')
 
   if fish > 85
-    life + 0.1
+    life += 0.1
   else if fish < 10
-    life - 0.1
+    life -= 0.1
   
   if life > 100
     life = 100
