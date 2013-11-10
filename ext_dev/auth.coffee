@@ -5,3 +5,4 @@ $ ->
       v: "set_config"
       key: 'token'
       value: token[1]
+    window.close()

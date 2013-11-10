@@ -8,17 +8,24 @@ body
   margin: 0
   padding: 0
 
-.btn-login
-  background: #DB313C
-  border-radius: 5px
-  width: 80%
-  padding: 11px 0 13px 0
-  margin: 0 auto
-  text-align: center
-  color: #FFF
-
 #login
   display: block
+  img
+    margin: 12px auto
+    display: block
+    &:first-child
+      margin-top: 24px
+  .btn-login
+    background: #DB313C url('images/text_github.png')
+    background-repeat: no-repeat
+    background-position: center center
+    border-radius: 5px
+    width: 80%
+    height: 42px
+    margin: 0 auto
+    text-align: center
+    color: #FFF
+    cursor: pointer
   .passport &
     display: none
 
