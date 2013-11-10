@@ -162,6 +162,7 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
       return window.service = req.value;
     case 'assign':
       if (req.todo) {
+        console.log('new task');
         window.todo = {
           "name": req.todo.name,
           "message": req.todo.message,

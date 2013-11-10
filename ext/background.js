@@ -15,7 +15,6 @@ Config = (function(_super) {
     name: null,
     task: false,
     tabid: 0,
-    photo: null,
     life: 20,
     fish: 20,
     service: true
@@ -37,10 +36,9 @@ config.on('change:token', function(model, value) {
         what: 'my ass',
         token: config.get('token')
       }, function() {
-        return socket.emit('user.whoami', function(status, res) {
-          config.set('name', res.name);
-          return config.set('photo', res.avatar);
-        });
+        return socket.emit('user.whoami', (function(status, res) {
+          return config.set('name', res.name);
+        }));
       });
     } else {
       window.socket = io.connect('http://touchday.2013.nodeknockout.com/');
@@ -50,10 +48,9 @@ config.on('change:token', function(model, value) {
           what: 'my ass',
           token: config.get('token')
         }, function() {
-          return socket.emit('user.whoami', function(status, res) {
-            config.set('name', res.name);
-            return config.set('photo', res.avatar);
-          });
+          return socket.emit('user.whoami', (function(status, res) {
+            return config.set('name', res.name);
+          }));
         });
       });
       return socket.on('shit', (function(taskid, task) {
@@ -140,16 +137,19 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
       break;
     case 'task_pass':
       config.set('task', false);
-      config.set('life', config.get('life') + 0.5);
       return console.log('task_pass');
     case 'get_status':
       return sendResponse({
         status: 1,
         life: config.get('life'),
+<<<<<<< HEAD
         fish: config.get('fish'),
         name: config.get('name'),
         photo: config.get('photo'),
         service: config.get('service')
+=======
+        fish: config.get('fish')
+>>>>>>> parent of a557b4b... add photo
       });
     case 'eat':
       if (req.value > 0) {
@@ -174,12 +174,13 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
 });
 
 (heat = function() {
-  var fish, life;
+  var fish;
   fish = config.get('fish') - 0.2;
   if (fish < 0) {
     fish = 0;
   }
   config.set('fish', fish);
+<<<<<<< HEAD
   life = config.get('life');
   if (fish > 85) {
     life + 0.1;
@@ -192,6 +193,8 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
     life = 0;
   }
   config.set('life', life);
+=======
+>>>>>>> parent of a557b4b... add photo
   return setTimeout(heat, 1000);
 })();
 

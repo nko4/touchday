@@ -4,8 +4,11 @@ $(function() {
   var fish, fish_dom, life, life_dom;
   life = 0;
   fish = 0;
+<<<<<<< HEAD
   $.photo = null;
   $.service = true;
+=======
+>>>>>>> parent of a557b4b... add photo
   $('#login .btn-login').on('click', function() {
     return chrome.tabs.create({
       url: "http://touchday.2013.nodeknockout.com/user/authorize"
@@ -64,12 +67,16 @@ $(function() {
       });
       return $('.fish .percent').text(parseInt(val, 10));
     }), 1000);
+<<<<<<< HEAD
     fish = res.fish;
     if (res.photo) {
       $.photo = res.photo;
       $('#info .photo').css("background-image", "url('" + $.photo + "')");
     }
     return $.service = res.service;
+=======
+    return fish = res.fish;
+>>>>>>> parent of a557b4b... add photo
   });
   return chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
     var fish_animate, life_animate;
