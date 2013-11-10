@@ -1,6 +1,6 @@
 'use strict';
 
-require('nko')('${code}');
+require('nko')('touchday.2013.nodeknockout.com');
 
 var http = require('http');
 var path = require('path');
