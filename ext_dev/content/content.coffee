@@ -25,9 +25,16 @@ getCat = () ->
         heat += 2
         heat += 2 if /fish/gi.exec(location.href)
 
+
       console.log 'eat eat up', heat
 
-      chrome.runtime.sendMessage {v:'eat', value: heat} if heat > 0
+      if heat > 0
+        heat = parseInt(heat,10)
+        heat = 99 if heat > 99
+        $(cat).append(tip = $('<div class="touchcat-life-tip" />').text('+'+heat))
+        setTimeout (-> $(tip).addClass('touchcat-show')), 300
+        setTimeout (-> $(tip).remove()), 1000
+        chrome.runtime.sendMessage {v:'eat', value: heat}
 
     $(cat).on 'mousedown', (e) ->
       window.hold = on

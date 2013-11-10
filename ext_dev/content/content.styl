@@ -37,8 +37,25 @@
   background: rgba(0, 0, 0, .75)
   color: #FFF
   border-radius: 10px
-  display: block
   width: 100%
   display: none
   &.has-todo
     display: block
+
+.touchcat-life-tip
+  position: absolute
+  left: 0
+  top: 0
+  background: rgba(#ff9f16, .75)
+  color: #000
+  font-size: 24px
+  border-radius: 10px
+  display: block
+  padding: 8px 10px 6px 10px
+  opacity: 1
+  &.touchcat-show
+    transition: all 0.5s
+    transition-timing-function: ease-in
+    top: -20px
+    opacity: 0
+

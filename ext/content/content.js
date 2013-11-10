@@ -20,7 +20,7 @@ getCat = function() {
       return e.preventDefault();
     }));
     $(cat).on('drop', function(e) {
-      var file, files, heat, total_size, _i, _len;
+      var file, files, heat, tip, total_size, _i, _len;
       e.preventDefault();
       files = e.originalEvent.dataTransfer.files;
       heat = 0;
@@ -39,6 +39,17 @@ getCat = function() {
       }
       console.log('eat eat up', heat);
       if (heat > 0) {
+        heat = parseInt(heat, 10);
+        if (heat > 99) {
+          heat = 99;
+        }
+        $(cat).append(tip = $('<div class="touchcat-life-tip" />').text('+' + heat));
+        setTimeout((function() {
+          return $(tip).addClass('touchcat-show');
+        }), 300);
+        setTimeout((function() {
+          return $(tip).remove();
+        }), 1000);
         return chrome.runtime.sendMessage({
           v: 'eat',
           value: heat
