@@ -1,5 +1,7 @@
 'use strict';
 
+require('nko')('${code}');
+
 var http = require('http');
 var path = require('path');
 var express = require('express');
