@@ -37,6 +37,7 @@ module.exports = function (io, models) {
       message: 'i am blueeeeeeeee',
       url: 'http:\/\/iamblue\.github\.io.*',
       value: 'Coding is not only a routine but also an art',
+      type: 'url',
       exp: -100
     }, function (err, taskClass) {
       if (err) {
