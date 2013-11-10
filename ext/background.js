@@ -142,14 +142,9 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
       return sendResponse({
         status: 1,
         life: config.get('life'),
-<<<<<<< HEAD
         fish: config.get('fish'),
         name: config.get('name'),
-        photo: config.get('photo'),
-        service: config.get('service')
-=======
-        fish: config.get('fish')
->>>>>>> parent of a557b4b... add photo
+        photo: config.get('photo')
       });
     case 'eat':
       if (req.value > 0) {
@@ -174,13 +169,12 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
 });
 
 (heat = function() {
-  var fish;
+  var fish, life;
   fish = config.get('fish') - 0.2;
   if (fish < 0) {
     fish = 0;
   }
   config.set('fish', fish);
-<<<<<<< HEAD
   life = config.get('life');
   if (fish > 85) {
     life + 0.1;
@@ -193,8 +187,6 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
     life = 0;
   }
   config.set('life', life);
-=======
->>>>>>> parent of a557b4b... add photo
   return setTimeout(heat, 1000);
 })();
 

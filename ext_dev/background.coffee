@@ -72,17 +72,12 @@ chrome.extension.onMessage.addListener (req, sender, sendResponse)->
       config.set('task', false)
       console.log 'task_pass'
     when 'get_status'
-<<<<<<< HEAD
       sendResponse
         status: 1
         life: config.get('life')
         fish: config.get('fish')
         name: config.get('name')
         photo: config.get('photo')
-        service: config.get('service')
-=======
-      sendResponse {status: 1, life: config.get('life'), fish: config.get('fish')}
->>>>>>> parent of a557b4b... add photo
     when 'eat'
       if req.value > 0
         fish = config.get('fish') + req.value
@@ -98,7 +93,6 @@ chrome.extension.onMessage.addListener (req, sender, sendResponse)->
   fish = config.get('fish') - 0.2
   fish = 0 if fish < 0
   config.set('fish',fish)
-<<<<<<< HEAD
   life = config.get('life')
 
   if fish > 85
@@ -113,7 +107,5 @@ chrome.extension.onMessage.addListener (req, sender, sendResponse)->
   
   config.set('life', life)
 
-=======
->>>>>>> parent of a557b4b... add photo
   setTimeout heat, 1000
 )()

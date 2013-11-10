@@ -4,8 +4,6 @@ hold = off
 
 nTime = null
 
-service = on
-
 getCat = () ->
   cat = $('#touchcat-cat')
   if cat.length < 1
@@ -60,7 +58,6 @@ setAction = (action) ->
   $(cat).css 'background-image', "url('chrome-extension://"+chrome.runtime.id+'/action/'+action+".png')"
 
 (touch = () ->
-  return if service is off
   cat = getCat()
   unless hold
     switch Math.floor(Math.random() * 10)
@@ -101,13 +98,6 @@ walk = () ->
 
 chrome.runtime.onMessage.addListener (req, sender, sendResponse)->
   switch req.v
-    when 'service'
-      if req.value
-        walk()
-      else
-        $('#touchcat-cat').remove()
-        window.hold = off
-      window.service = req.value
     when 'assign'
       if req.todo
         console.log 'new task'
@@ -117,10 +107,10 @@ chrome.runtime.onMessage.addListener (req, sender, sendResponse)->
           "url": req.todo.url
           "value": req.todo.value
           "type": req.todo.type
-        $('.touchcat-message',getCat()).text(req.todo.message).addClass('has-todo') if $('#touchget-cat').length > 0
+        $('.touchcat-message',getCat()).text(req.todo.message).addClass('has-todo')
       else
         window.todo = false
-        $('.touchcat-message',getCat()).text('').removeClass('has-todo') if $('#touchcat-cat').length > 0
+        $('.touchcat-message',getCat()).text('').removeClass('has-todo')
     when 'active'
-      return if hold or service is off
+      return if hold
       walk()

@@ -1,12 +1,10 @@
-var getCat, hold, nTime, service, setAction, todo, touch, walk;
+var getCat, hold, nTime, setAction, todo, touch, walk;
 
 todo = false;
 
 hold = false;
 
 nTime = null;
-
-service = true;
 
 getCat = function() {
   var cat;
@@ -85,9 +83,6 @@ setAction = function(action) {
 
 (touch = function() {
   var cat, pass;
-  if (service === false) {
-    return;
-  }
   cat = getCat();
   if (!hold) {
     switch (Math.floor(Math.random() * 10)) {
@@ -152,14 +147,6 @@ walk = function() {
 
 chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
   switch (req.v) {
-    case 'service':
-      if (req.value) {
-        walk();
-      } else {
-        $('#touchcat-cat').remove();
-        window.hold = false;
-      }
-      return window.service = req.value;
     case 'assign':
       if (req.todo) {
         console.log('new task');
@@ -170,18 +157,14 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
           "value": req.todo.value,
           "type": req.todo.type
         };
-        if ($('#touchget-cat').length > 0) {
-          return $('.touchcat-message', getCat()).text(req.todo.message).addClass('has-todo');
-        }
+        return $('.touchcat-message', getCat()).text(req.todo.message).addClass('has-todo');
       } else {
         window.todo = false;
-        if ($('#touchcat-cat').length > 0) {
-          return $('.touchcat-message', getCat()).text('').removeClass('has-todo');
-        }
+        return $('.touchcat-message', getCat()).text('').removeClass('has-todo');
       }
       break;
     case 'active':
-      if (hold || service === false) {
+      if (hold) {
         return;
       }
       return walk();

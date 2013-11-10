@@ -1,19 +1,16 @@
 $ ->
   life = 0
   fish = 0
-<<<<<<< HEAD
   $.photo = null
   $.service = on
-=======
->>>>>>> parent of a557b4b... add photo
   $('#login .btn-login').on 'click', () ->
     chrome.tabs.create({url:"http://touchday.2013.nodeknockout.com/user/authorize"})
-  $('#info .photo').on 'click', ()->
-    if $.service
-      chrome.runtime.sendMessage {v:'stop'}
-    else
-      chrome.runtime.sendMessage {v:'start'}
-    $.service = !$.service
+  # $('#info .photo').on 'click', ()->
+  #   if $.service
+  #     chrome.runtime.sendMessage {v:'stop'}
+  #   else
+  #     chrome.runtime.sendMessage {v:'start'}
+  #   $.service = !$.service
 
   chrome.runtime.sendMessage {v:'whoami'}, (res) ->
     if res.value isnt no
@@ -47,13 +44,10 @@ $ ->
       $('.fish .percent').text(parseInt(val,10))
     ), 1000
     fish = res.fish
-<<<<<<< HEAD
     if res.photo
       $.photo = res.photo
       $('#info .photo').css("background-image","url('"+$.photo+"')")
     $.service = res.service
-=======
->>>>>>> parent of a557b4b... add photo
 
   chrome.runtime.onMessage.addListener (req, sender, sendResponse)->
     switch req.v
