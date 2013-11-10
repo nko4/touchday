@@ -18,6 +18,12 @@ a {
   overflow: hidden;
 }
 
+#votes {
+  position: absolute;
+  right: 80px;
+  bottom: 10px;
+}
+
 /** VIDEO **/
 #video-section {
   overflow: hidden;
