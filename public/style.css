@@ -146,12 +146,7 @@ a {
   background: #121212;
   text-align: center;
   border-left: 1px #1d1d1d solid;
-  opacity: 0;
-  transition: opacity .5s;
-}
-
-#menu.display {
-  opacity: .8;
+  opacity: 0.8;
 }
 
 .menu__sections {
@@ -439,4 +434,55 @@ a {
   text-shadow: 0 1px 2px rgba(0, 0, 0, .75);
   text-indent: -20px;
   margin-left: 10px;
+}
+
+#download-section {
+  background: url(images/section3.png) no-repeat center center fixed;
+  background-size: cover;
+}
+
+.download-section__logo {
+  background: url(./images/icon_220.png);
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  left: 50%;
+  top: 50%;
+  margin-left: -400px;
+  margin-top: -165px;
+}
+
+.dowload-section__download-btn {
+  background: url(./images/download_icon_big.png) no-repeat 70px center, -webkit-linear-gradient(bottom, #ff8316, #ff9f16);
+  background: url(./images/download_icon_big.png) no-repeat 70px center, -moz-linear-gradient(bottom, #ff8316, #ff9f16);
+  background: url(./images/download_icon_big.png) no-repeat 70px center, linear-gradient(bottom, #ff8316, #ff9f16);
+  color: #FFF;
+  line-height: 100px;
+  font-size: 36px;
+  text-shadow: 0 1px 1px #d13e56;
+  text-indent: 140px;
+  position: absolute;
+  width: 460px;
+  box-sizing: border-box;
+  border: 1px #ff7516 solid;
+  border-radius: 5px;
+  letter-spacing: 4px;
+  left: 50%;
+  top: 50%;
+  margin-left: -140px;
+  margin-top: -50px;
+}
+
+.download-section__content__text {
+  font-family: 'Just Another Hand';
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .75);
+  font-size: 48px;
+  letter-spacing: 10px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 500px;
+  margin-top: -140px;
+  margin-left: -140px;
+  color: #FFF;
 }

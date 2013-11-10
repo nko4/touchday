@@ -302,13 +302,6 @@ jQuery(function ($) {
             }, index * 150 + 100);
           });
         }
-      },
-      {
-        startTime: 7.3,
-        started: false,
-        startAction: function () {
-          home.elems.menu.addClass('display');
-        }
       }
     ],
 
