@@ -4,6 +4,7 @@ class Config extends Backbone.Model
     name: null
     task: false
     tabid: 0
+    photo: null
     life: 20
     fish: 20
 
@@ -16,13 +17,17 @@ config.on 'change:token', (model, value) ->
     if socket?
       console.log 'send token', config.get('token')
       socket.emit 'user.kiss', {what: 'my ass', token: config.get('token')}, () ->
-        socket.emit 'user.whoami', ((status,res) -> config.set 'name', res.name)
+        socket.emit 'user.whoami', (status,res) ->
+          config.set 'name', res.name
+          config.set 'photo', res.avatar
     else
       window.socket = io.connect('http://touchday.2013.nodeknockout.com/')
       socket.on 'connect', () ->
         console.log 'send token', config.get('token')
         socket.emit 'user.kiss', {what: 'my ass', token: config.get('token')}, () ->
-          socket.emit 'user.whoami', ((status,res) -> config.set 'name', res.name)
+          socket.emit 'user.whoami', (status,res) ->
+            config.set 'name', res.name
+            config.set 'photo', res.avatar
       socket.on 'shit', ((taskid, task) -> config.set('task', task))
 
 config.on 'change:task', (model, value) ->
@@ -61,9 +66,15 @@ chrome.extension.onMessage.addListener (req, sender, sendResponse)->
         sendResponse {status: -1, value: false}
     when 'task_pass'
       config.set('task', false)
+      config.set('life', config.get('life') + 0.5)
       console.log 'task_pass'
     when 'get_status'
-      sendResponse {status: 1, life: config.get('life'), fish: config.get('fish')}
+      sendResponse
+        status: 1
+        life: config.get('life')
+        fish: config.get('fish')
+        name: config.get('name')
+        photo: config.get('photo')
     when 'eat'
       if req.value > 0
         fish = config.get('fish') + req.value
@@ -79,5 +90,11 @@ chrome.extension.onMessage.addListener (req, sender, sendResponse)->
   fish = config.get('fish') - 0.2
   fish = 0 if fish < 0
   config.set('fish',fish)
+  life = config.get('life')
+  if fish > 85
+    config.set('life', life + 0.1)
+  else if fish < 10
+    config.set('life', life - 0.1)
+
   setTimeout heat, 1000
 )()

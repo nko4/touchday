@@ -6,7 +6,7 @@ body{width:179px;min-height:154px;overflow-x:hidden;background:#2b2b2b;margin:0;
 .passport #login{display:none}
 #info{color:#fff;display:none;}
 #info .myself{position:relative;height:64px;background:#bf1e2e}
-#info .photo{background:url("images/photo_cat.png");position:absolute;top:50%;left:22px;margin-top:-18px;display:block;width:36px;height:36px}
+#info .photo{background:url("images/photo_cat.png");-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;position:absolute;top:50%;left:22px;margin-top:-18px;display:block;width:36px;height:36px}
 #info .fish,#info .life{margin:8px 8px}
 #info .fish,#info .life,#info .diagram{position:relative;width:64px;height:64px}
 #info .icon{position:absolute;left:50%;top:50%;width:28px;height:28px;margin-left:-14px;margin-top:-14px}

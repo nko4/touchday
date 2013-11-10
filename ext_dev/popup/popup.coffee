@@ -1,6 +1,7 @@
 $ ->
   life = 0
   fish = 0
+  $.photo = null
   $('#login .btn-login').on 'click', () ->
     chrome.tabs.create({url:"http://touchday.2013.nodeknockout.com/user/authorize"})
 
@@ -36,6 +37,9 @@ $ ->
       $('.fish .percent').text(parseInt(val,10))
     ), 1000
     fish = res.fish
+    if res.photo
+      $.photo = res.photo
+      $('#info .photo').css("background-image: url('"+$.photo+"')")
 
   chrome.runtime.onMessage.addListener (req, sender, sendResponse)->
     switch req.v
