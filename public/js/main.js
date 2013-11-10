@@ -241,7 +241,7 @@ jQuery(function ($) {
         $video.addClass('display');
         home.playVideo();
       });
-      $video.on('loadstart', function () {
+      $video.on('loadstart stalled', function () {
         $loading.addClass('display');
       });
       $video.on('timeupdate', this.videoTimeupdate.bind(this));
