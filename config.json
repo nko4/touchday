@@ -1,5 +1,5 @@
 {
-  "host": "touchday.2013.nodeknockout.com",
+  "host": "localhost",
   "port": 80,
   "mongodb": "mongodb://127.0.0.1/touchday",
   "github.ClientID": "533ebceb86560b7d740d",
