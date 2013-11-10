@@ -1,9 +1,6 @@
 'use strict';
 
-require('nko')('526d2c70e856a9c35a00067e', function(err, res) {
-  if (err) throw err;
-  res.on('data', function(d) { console.log(d.toString()); });
-});
+require('nko')('HaySExiRGAQFvfJk');
 
 var http = require('http');
 var path = require('path');
