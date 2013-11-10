@@ -13,9 +13,15 @@
   position: fixed
   right: 0
   bottom: 0
+  z-index: 99999
   background-repeat: no-repeat
   animation-duration: 0.5s
   animation-name: action
   animation-timing-function: steps(9)
   animation-iteration-count: infinite
   animation-direction: alternate
+  &.cat-pitch
+    margin-right: -200px
+    margin-bottom: -200px
+  &.cat-front_swing_nose
+    transition: all 0.5s
