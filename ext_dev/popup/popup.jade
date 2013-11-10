@@ -20,10 +20,23 @@ html
     link(rel="stylesheet",type="text/css",href="popup.css")
     script(src='../scripts/jquery.min.js')
     script(src='../scripts/angular.min.js')
+    script(src='../scripts/snap.svg-min.js')
     script(src='popup.js')
 
   body(onselectstart="return false")
-    .header
-    .container
-      a#login Login
-      .cat
+    #login
+      .logo
+      .btn-login GitHub
+    #info
+      .myself
+        .photo
+        .title
+        .name
+      .life
+        svg.diagram
+        .icon
+        .percent 50
+      .fish
+        svg.diagram
+        .icon
+        .percent 50

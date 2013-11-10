@@ -8,9 +8,6 @@ getCat = () ->
 setAction = (action) ->
   $(getCat()).css 'background-image', "url('chrome-extension://"+chrome.runtime.id+'/action/'+action+".png')"
 
-chrome.runtime.sendMessage {greeting: "hello"}, (response) ->
-  console.log(response)
-
 chrome.runtime.onMessage.addListener (req, sender, sendResponse)->
   switch req.v
     when 'assign'
