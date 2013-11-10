@@ -4,6 +4,8 @@ class Config extends Backbone.Model
     name: null
     task: false
     tabid: 0
+    life: 20
+    fish: 20
 
 config = new Config()
 
@@ -24,7 +26,14 @@ config.on 'change:token', (model, value) ->
       socket.on 'shit', ((taskid, task) -> config.set('task', task))
 
 config.on 'change:task', (model, value) ->
+  console.log 'new task', value
   chrome.tabs.sendMessage config.get('tabid'), {v: 'assign', todo: value}
+
+config.on 'change:life change:fish', (model) ->
+  chrome.extension.sendMessage
+    v: 'status'
+    life: config.get('life')
+    fish: config.get('fish')
 
 config.on 'change:tabid', (model, tabid) ->
   chrome.tabs.sendMessage tabid, {v: 'active'}
@@ -53,8 +62,17 @@ chrome.extension.onMessage.addListener (req, sender, sendResponse)->
     when 'task_pass'
       config.set('task', false)
       console.log 'task_pass'
+    when 'get_status'
+      sendResponse {status: 1, life: config.get('life'), fish: config.get('fish')}
     when 'whoami'
       name = config.get('name')
       sendResponse {status: 1, value: if name? then name else false}
     else
       sendResponse {status: 0}
+
+(heat = ->
+  fish = config.get('fish') - 0.2
+  fish = 0 if fish < 0
+  config.set('fish',fish)
+  setTimeout heat, 1000
+)()

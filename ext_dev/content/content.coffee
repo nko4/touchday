@@ -8,6 +8,11 @@ getCat = () ->
   cat = $('#touchcat-cat')
   if cat.length < 1
     cat = $('<div id="touchcat-cat"><div class="touchcat-message" /></div>').appendTo('body')
+    $(cat).on 'dragover', ((e) -> e.preventDefault())
+    $(cat).on 'drop', (e) ->
+      e.preventDefault()
+      files = e.originalEvent.dataTransfer.files
+      console.log files
     $(cat).on 'mousedown', (e) ->
       window.hold = on
       clearTimeout(nTime) if nTime

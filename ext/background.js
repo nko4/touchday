@@ -1,4 +1,4 @@
-var Config, config, _ref,
+var Config, config, heat, _ref,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -14,7 +14,9 @@ Config = (function(_super) {
     token: false,
     name: null,
     task: false,
-    tabid: 0
+    tabid: 0,
+    life: 20,
+    fish: 20
   };
 
   return Config;
@@ -58,9 +60,18 @@ config.on('change:token', function(model, value) {
 });
 
 config.on('change:task', function(model, value) {
+  console.log('new task', value);
   return chrome.tabs.sendMessage(config.get('tabid'), {
     v: 'assign',
     todo: value
+  });
+});
+
+config.on('change:life change:fish', function(model) {
+  return chrome.extension.sendMessage({
+    v: 'status',
+    life: config.get('life'),
+    fish: config.get('fish')
   });
 });
 
@@ -111,6 +122,12 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
     case 'task_pass':
       config.set('task', false);
       return console.log('task_pass');
+    case 'get_status':
+      return sendResponse({
+        status: 1,
+        life: config.get('life'),
+        fish: config.get('fish')
+      });
     case 'whoami':
       name = config.get('name');
       return sendResponse({
@@ -123,6 +140,16 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
       });
   }
 });
+
+(heat = function() {
+  var fish;
+  fish = config.get('fish') - 0.2;
+  if (fish < 0) {
+    fish = 0;
+  }
+  config.set('fish', fish);
+  return setTimeout(heat, 1000);
+})();
 
 /*
 //@ sourceMappingURL=background.js.map

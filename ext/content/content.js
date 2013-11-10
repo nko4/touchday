@@ -11,6 +11,15 @@ getCat = function() {
   cat = $('#touchcat-cat');
   if (cat.length < 1) {
     cat = $('<div id="touchcat-cat"><div class="touchcat-message" /></div>').appendTo('body');
+    $(cat).on('dragover', (function(e) {
+      return e.preventDefault();
+    }));
+    $(cat).on('drop', function(e) {
+      var files;
+      e.preventDefault();
+      files = e.originalEvent.dataTransfer.files;
+      return console.log(files);
+    });
     $(cat).on('mousedown', function(e) {
       window.hold = true;
       if (nTime) {

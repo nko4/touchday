@@ -1,7 +1,9 @@
 var getPath;
 
 $(function() {
-  var fish, fish_animate, fish_diagram, life, life_animate, life_diagram;
+  var fish, fish_dom, life, life_dom;
+  life = 0;
+  fish = 0;
   $('#login .btn-login').on('click', function() {
     return chrome.tabs.create({
       url: "http://touchday.2013.nodeknockout.com/user/authorize"
@@ -17,30 +19,59 @@ $(function() {
       return $('body').removeClass('passport');
     }
   });
-  life = Snap(".life .diagram");
-  life_diagram = life.path({
-    path: getPath(50, 100, 28),
+  life_dom = Snap(".life .diagram");
+  window.life_diagram = life_dom.path({
+    path: getPath(0, 100, 28),
     fill: "none",
     stroke: "#ff9f16",
     strokeWidth: 8
   });
-  life_animate = Snap.animate(50, 100, (function(val) {
-    return life_diagram.attr({
-      path: getPath(val, 100, 28)
-    });
-  }), 1000);
-  fish = Snap(".fish .diagram");
-  fish_diagram = fish.path({
-    path: getPath(50, 100, 28),
+  fish_dom = Snap(".fish .diagram");
+  window.fish_diagram = fish_dom.path({
+    path: getPath(0, 100, 28),
     fill: "none",
     stroke: "#24df9a",
     strokeWidth: 8
   });
-  return fish_animate = Snap.animate(50, 100, (function(val) {
-    return fish_diagram.attr({
-      path: getPath(val, 100, 28)
-    });
-  }), 1000);
+  chrome.runtime.sendMessage({
+    v: 'get_status'
+  }, function(res) {
+    var fish_animate, life_animate;
+    life_animate = Snap.animate(life, res.life, (function(val) {
+      window.life_diagram.attr({
+        path: getPath(val, 100, 28)
+      });
+      return $('.life .percent').text(parseInt(val, 10));
+    }), 1000);
+    life = res.life;
+    fish_animate = Snap.animate(fish, res.fish, (function(val) {
+      window.fish_diagram.attr({
+        path: getPath(val, 100, 28)
+      });
+      return $('.fish .percent').text(parseInt(val, 10));
+    }), 1000);
+    return fish = res.fish;
+  });
+  return chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
+    var fish_animate, life_animate;
+    switch (req.v) {
+      case 'status':
+        life_animate = Snap.animate(life, req.life, (function(val) {
+          window.life_diagram.attr({
+            path: getPath(val, 100, 28)
+          });
+          return $('.life .percent').text(parseInt(val, 10));
+        }), 1000);
+        life = req.life;
+        fish_animate = Snap.animate(fish, req.fish, (function(val) {
+          window.fish_diagram.attr({
+            path: getPath(val, 100, 28)
+          });
+          return $('.fish .percent').text(parseInt(val, 10));
+        }), 1000);
+        return fish = req.fish;
+    }
+  });
 });
 
 getPath = function(value, total, R) {
